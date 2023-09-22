@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>P2_027</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="header1">P2_027</div>
+
+    <form onsubmit="return validate()">
+        <table>
+            <tbody>
+                <tr>
+                    <td>Nama</td>
+                    <td>:</td>
+                    <td>
+                        <input id="nama" type="text" />
+                    </td>
+                    <td id="error_nama" style="color: red"></td> <!-- tambahkan elemen untuk pesan kesalahan -->
+                </tr>
+                <tr>
+                    <td>Mata Kuliah</td>
+                    <td>:</td>
+                    <td>
+                        <select id="matakuliah">
+                            <option value="">Pilih Mata Kuliah</option>
+                            <option value="Matematika">Matematika</option>
+                            <option value="Fisika">Fisika</option>
+                            <option value="Kimia">Kimia</option>
+                        </select>
+                    </td>
+                    <td id="error_matakuliah" style="color: red"></td>
+                </tr>
+                <tr>
+                    <td>Nilai</td>
+                    <td>:</td>
+                    <td>
+                        <input id="nilai" type="number" />
+                    </td>
+                    <td id="error_nilai" style="color: red"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" onclick="resetForm()">Batal</button>
+                    </td>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="kirim" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <script>
+        function validate() {
+            // Tambahkan kode validasi di sini
+            let nama = document.getElementById("nama").value;
+            let matakuliah = document.getElementById("matakuliah").value;
+            let nilai = document.getElementById("nilai").value;
+            let validate = true;
+
+            // Validasi nama
+            if (nama.trim() === "") {
+                document.getElementById("error_nama").innerText = "Harap isi field Nama!"; //tampilkan pesan kesalahan
+                validate = false;
+            } else {
+                let namaPattern = /^[a-zA-Z\s]*$/; // Pola regex untuk huruf dan spasi
+                if (!namaPattern.test(nama.trim())) {
+                    document.getElementById("error_nama").innerText = "Nama harus berisi huruf atau spasi!";
+                    validate = false;
+                } else if (nama.length > 20) { // Validasi maksimal nama
+                    document.getElementById("error_nama").innerText = "Nama maksimal 20 huruf!";
+                    validate = false;
+                } else {
+                    document.getElementById("error_nama").innerText = ""; //hapus pesan kesalahan jika valid
+                }
+            }
+
+            //validasi mata kuliah
+            if (matakuliah === "") {
+                document.getElementById("error_matakuliah").innerText = "Harap pilih Mata Kuliah!";
+                validate = false;
+            } else {
+                document.getElementById("error_matakuliah").innerText = "";
+            }
+
+            // Validasi nilai
+            if (nilai === "") {
+                document.getElementById("error_nilai").innerText = "Harap isi field Nilai";
+                validate = false;
+            } else {
+                let numericValue = parseFloat(nilai); // Ubah nilai menjadi angka
+                if (isNaN(numericValue) || numericValue < 0 || numericValue > 100) {
+                    document.getElementById("error_nilai").innerText = "Nilai harus berada dalam rentang 0 hingga 100!";
+                    validate = false;
+                } else {
+                    document.getElementById("error_nilai").innerText = "";
+                }
+            }
+            return validate; // Kembalikan false untuk mencegah pengiriman formulir sementara
+        }
+
+        function resetForm() {
+            // Mengatur ulang isi semua field
+            document.getElementById("nama").value = "";
+            document.getElementById("matakuliah").value = "";
+            document.getElementById("nilai").value = "";
+            document.getElementById("error_nama").innerText = "";
+            document.getElementById("error_matakuliah").innerText = "";
+            document.getElementById("error_nilai").innerText = "";
+        }
+    </script>
+</body>
+</html>
